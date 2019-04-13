@@ -1,0 +1,20 @@
+message Channel {
+    int32 id =1
+  string name = 2;
+  repeated Subscriber subscribers = 3;
+}
+
+message Conversation {
+    int32 id = 1;
+    repeated Subscriber subscribers = 2;
+} 
+
+message Subscriber {
+    int32 id = 1;
+    string name = 2;
+}
+  
+message Message {
+    Subscriber subscriber = 1;
+    string message = 2;
+} 
