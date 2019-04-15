@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.Properties;
 
 public class KafkaChatConsumer {
-  private final static String TOPIC = "chat";
+  private final static String TOPIC = "Message";
   private final static String BOOTSTRAP_SERVERS =
       "localhost:9092";
 
-  private Consumer<Long, String> createConsumer() {
+  private Consumer<Long, chatserver.Proto.Message> createConsumer() {
     final Properties props = new Properties();
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
         BOOTSTRAP_SERVERS);
@@ -24,7 +24,7 @@ public class KafkaChatConsumer {
         StringDeserializer.class.getName());
 
     // Create the consumer using props.
-    final Consumer<Long, String> consumer =
+    final Consumer<Long, chatserver.Proto.Message> consumer =
         new KafkaConsumer<>(props);
 
     // Subscribe to the topic.
@@ -34,13 +34,13 @@ public class KafkaChatConsumer {
 
 
   public void ConsumeMessage() throws InterruptedException {
-    final Consumer<Long, String> consumer = createConsumer();
+    final Consumer<Long, chatserver.Proto.Message> consumer = createConsumer();
 
     int giveUp = 100;
     int noRecordsCount = 0;
 
     while (true) {
-      final ConsumerRecords<Long, String> consumerRecords =
+      final ConsumerRecords<Long, chatserver.Proto.Message> consumerRecords =
           consumer.poll(1000);
 
       if (consumerRecords.count()==0) {

@@ -7,11 +7,11 @@ import java.util.Properties;
 
 public class KafkaChatProducer {
 
-    private final static String TOPIC = "chat";
+    private final static String TOPIC = "Message";
     private final static String BOOTSTRAP_SERVERS =
         "localhost:9092";
 
-  private Producer<Long, String> createProducer() {
+  private Producer<Long, chatserver.Proto.Message> createProducer() {
     Properties props = new Properties();
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
         BOOTSTRAP_SERVERS);
@@ -24,12 +24,13 @@ public class KafkaChatProducer {
   }
 
   public void ProduceMessage(final String message) throws Exception {
-    final Producer<Long, String> producer = createProducer();
+    final Producer<Long, chatserver.Proto.Message> producer = createProducer();
     long time = System.currentTimeMillis();
 
     try {
-        final ProducerRecord<Long, String> record =
-            new ProducerRecord<>(TOPIC, 0l, message);
+        final ProducerRecord<Long, chatserver.Proto.Message> record =
+            new ProducerRecord<>(TOPIC, 0l,
+                    chatserver.Proto.Message.newBuilder().setMessage(message).build());
 
         RecordMetadata metadata = producer.send(record).get();
 
