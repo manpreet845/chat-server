@@ -1,1 +1,1 @@
-protoc --proto_path=proto --java_out=src/main/java/server/proto proto/proto.proto
+protoc --proto_path=proto --java_out=src/main/java/ proto/proto.proto

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package chatserver;
+package manicorp;
 
 message Channel {
     int32 id = 1;

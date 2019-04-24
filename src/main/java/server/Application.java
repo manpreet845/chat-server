@@ -1,5 +1,6 @@
 package server;
 
+import manicorp.Proto;
 import server.kafka.KafkaChatConsumer;
 import server.kafka.KafkaChatProducer;
 
@@ -10,7 +11,9 @@ public class Application {
 
     try {
       for (int i = 0; i < 10; i++) {
-        producer.ProduceMessage("chat");
+        long time = System.currentTimeMillis();
+        byte[] message = Proto.Message.newBuilder().setMessage("chat").build().toByteArray();
+        producer.ProduceMessage("Message", time, message);
       }
     } catch (Exception e) {
       e.printStackTrace();
